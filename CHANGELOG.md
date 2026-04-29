@@ -4,6 +4,77 @@ All notable changes to this repo. Versions follow semver: patch for
 bug fixes, minor for new components or new config keys, major for
 breaking shape changes to existing config keys.
 
+## v0.2.0 — 2026-04-29 — extraction-gap promotions
+
+Surfaced by the shell-test extraction-validator prototype. Side-by-
+side parity check against printer-dashboard turned up several
+foundation pieces every consumer needs that v0.1.0 left behind in the
+consumer tree. v0.2.0 promotes them upstream so a fresh consumer can
+mount the full chrome by importing waki-shell alone.
+
+### Components
+
+- **ThemePickerOverlay** — full-screen frosted overlay for switching
+  visual theme + light/dark mode. Originally in printer-dashboard.
+  Now app-agnostic via `themes` / `Miniature` / `icons` slots.
+
+### Hooks
+
+- **useTheme** — light/dark toggle with localStorage persistence and
+  system-preference fallback. Storage key configurable per app via
+  `setThemeStorageKey`.
+- **useFullscreen** — kiosk-mode helper. Tracks document fullscreen
+  state, acquires + re-acquires a screen Wake Lock so wall-mounted
+  tablets do not dim mid-task.
+- **useVersionWatcher** — polls the consumer's `/api/version`
+  endpoint, drives the UpdateBanner's `visible` flag.
+
+### Library
+
+- **lib/version** — version-watch primitives shared by the API
+  helper and the watcher hook. Configurable endpoint and cooldown
+  storage key. Includes `applyForceRefresh()` for the
+  service-worker-and-cache-wipe routine the banner triggers.
+
+### Styles (NEW)
+
+- **styles/animations.css** — keyframes + `.animate-X` classes the
+  shell components reference (modalIn / overlayIn / shimmer /
+  splashBounce / cardIn / etc.). Drop-in via
+  `@import "waki-shell/styles/animations.css"`.
+- **styles/utilities.css** — `.surface-page`, `.surface-1`,
+  `.text-strong`, `.btn-primary`, `.card`, `.input` family — the
+  foundation atoms every consumer composes.
+- **styles/dark-mode-safety.css** — the "nuclear" `.dark .bg-white`
+  override that closes Tailwind's dark-mode source-order loophole.
+- **styles/index.css** — convenience barrel that pulls all three.
+
+### Tooling
+
+- **tailwind.config.shared.js** — slate palette tuning + sans-serif
+  stack + `darkMode: "class"`. Spread into a consumer's tailwind
+  config so the dark-mode safety net's literal RGB values stay
+  aligned with Tailwind's resolved tokens.
+- **templates/theme-bootstrap.html** — inline `<script>` snippet for
+  the consumer's index.html `<head>` that sets `dark` / `light` on
+  `<html>` synchronously before paint, mirroring useTheme's
+  precedence rules.
+- **vite/version-plugin** — Vite plugin pair that bakes
+  `__APP_VERSION__` into the bundle and writes `dist/version.json`
+  on `closeBundle`. Pairs with `lib/version` so client and backend
+  agree on which build is running.
+
+### `dist/shell.json` schema additions
+
+- `hooks: string[]` — names of hooks shipped at this version.
+- `styles: string[]` — relative paths of the bundled stylesheets.
+- `templates: string[]` — relative paths of the bundled HTML
+  templates (e.g. theme-bootstrap).
+- `vitePlugins: string[]` — names of the Vite plugins exported.
+
+The `config` shape is unchanged; pre-v0.2.0 consumers reading only
+`config` keep working.
+
 ## v0.1.0 — 2026-04-29 — initial scaffold
 
 First public version. Components extracted from

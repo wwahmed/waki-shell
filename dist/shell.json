@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0",
-  "gitSha": "e56de97",
-  "builtAt": "2026-04-29T17:19:18.964Z",
+  "version": "0.2.0",
+  "gitSha": "f75483b",
+  "builtAt": "2026-04-29T21:35:54.055Z",
   "config": {
     "breakpoints": {
       "sm": 640,
@@ -127,6 +127,24 @@
     "UserMenu",
     "EmptyState",
     "LoadingSkeleton",
-    "ErrorState"
+    "ErrorState",
+    "ThemePickerOverlay"
+  ],
+  "hooks": [
+    "useTheme",
+    "useFullscreen",
+    "useVersionWatcher"
+  ],
+  "styles": [
+    "styles/animations.css",
+    "styles/utilities.css",
+    "styles/dark-mode-safety.css",
+    "styles/index.css"
+  ],
+  "templates": [
+    "templates/theme-bootstrap.html"
+  ],
+  "vitePlugins": [
+    "versionPlugin"
   ]
 }

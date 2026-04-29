@@ -81,7 +81,21 @@ const COMPONENTS = [
   "EmptyState",
   "LoadingSkeleton",
   "ErrorState",
+  "ThemePickerOverlay",
 ];
+
+const HOOKS = ["useTheme", "useFullscreen", "useVersionWatcher"];
+
+const STYLES = [
+  "styles/animations.css",
+  "styles/utilities.css",
+  "styles/dark-mode-safety.css",
+  "styles/index.css",
+];
+
+const TEMPLATES = ["templates/theme-bootstrap.html"];
+
+const VITE_PLUGINS = ["versionPlugin"];
 
 const payload = {
   version: pkgVersion(),
@@ -99,6 +113,10 @@ const payload = {
     states,
   },
   components: COMPONENTS,
+  hooks: HOOKS,
+  styles: STYLES,
+  templates: TEMPLATES,
+  vitePlugins: VITE_PLUGINS,
 };
 
 const distDir = resolve(repoRoot, "dist");
