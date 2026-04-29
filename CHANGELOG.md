@@ -4,6 +4,28 @@ All notable changes to this repo. Versions follow semver: patch for
 bug fixes, minor for new components or new config keys, major for
 breaking shape changes to existing config keys.
 
+## v0.2.1 — 2026-04-29 — Header right-alignment regression fix
+
+`Header.tsx` was placing the actions cluster directly after the
+brand on mobile because the `ml-auto` / `ml-0` heuristic keyed off
+"is the desktopNav prop supplied" rather than "is the desktopNav
+currently visible". Consumers always pass desktopNav (the shell
+hides it at `< md`), so the actions wrapper got `ml-0` and the
+mobile layout became `[brand][palette][avatar] ............` with
+no spacer pushing the icons to the right edge. Pre-extraction
+printer-dashboard had `ml-auto md:ml-0` directly on the palette
+button, which is what broke during v0.1.0's extraction.
+
+Fix: actions wrapper now uses `ml-auto` unconditionally. At
+md+ the desktopNav's `flex-1 justify-center` already pushes
+actions to the right edge, so the auto margin is a no-op there.
+At mobile, the auto margin is what restores right-alignment.
+
+No API change; consumers re-sync the file and rebuild.
+
+Reported by Waqas via printer-dashboard. Worth checking against
+the shell-test prototype too as a regression baseline.
+
 ## v0.2.0 — 2026-04-29 — extraction-gap promotions
 
 Surfaced by the shell-test extraction-validator prototype. Side-by-

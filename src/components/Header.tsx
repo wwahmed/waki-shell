@@ -54,7 +54,16 @@ export function Header({
         </nav>
       )}
       {actions && (
-        <div className={`${desktopNav ? "ml-0" : "ml-auto"} flex items-center gap-1 sm:gap-2`}>
+        // `ml-auto` always: at md+ the desktopNav's flex-1 already
+        // pushes the actions cluster to the right edge, so the auto
+        // margin is a no-op there. At mobile the desktopNav is
+        // hidden via `hidden md:flex`, so without ml-auto the actions
+        // would sit immediately after the brand with empty space on
+        // the right — the regression Waqas reported on the v0.2.0
+        // sync. The earlier `${desktopNav ? "ml-0" : "ml-auto"}`
+        // heuristic was wrong because it couldn't distinguish "nav
+        // exists in the DOM" from "nav is currently visible".
+        <div className="ml-auto flex items-center gap-1 sm:gap-2">
           {actions}
         </div>
       )}
