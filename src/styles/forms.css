@@ -1,0 +1,142 @@
+/* waki-shell / forms.css
+ * ----------------------------------------------------------------------------
+ * Shared form-control styling so brain-v2's Capture inputs and
+ * printer-dashboard's Settings inputs look like they belong to the
+ * same family.
+ *
+ * Builds on top of the `.input` atom in utilities.css. That atom
+ * gives the standard text-input shape (rounded, slate border, sky
+ * focus ring); this file extends it with sibling controls
+ * (textarea, select, checkbox, radio, switch), validation states
+ * (error / warning / success), helper text, labels, and a couple
+ * of glass-themed wrappers (input-group, field).
+ *
+ * Pattern follows the rest of waki-shell: opt-in via @import. The
+ * consumer drops one
+ *
+ *   @import "waki-shell/styles/forms.css";
+ *
+ * after Tailwind's component layer. As with utilities.css, this
+ * file uses `@apply` and must be processed by Tailwind during the
+ * consumer build. */
+
+@layer components {
+  /* ---- Field wrapper + label + helper ---------------------------------- */
+  .field {
+    @apply flex flex-col gap-1.5;
+  }
+  .field-label {
+    @apply text-sm font-medium text-strong;
+  }
+  .field-helper {
+    @apply text-xs text-muted leading-snug;
+  }
+  .field-error {
+    @apply text-xs text-red-700 dark:text-red-300 leading-snug;
+  }
+
+  /* ---- Textarea -------------------------------------------------------- */
+  .textarea {
+    @apply input min-h-[6rem] py-2 leading-relaxed resize-y;
+  }
+
+  /* ---- Select ---------------------------------------------------------- */
+  /* Native select with a slate caret painted via background-image so it
+     reads consistently in both light and dark mode. */
+  .select {
+    @apply input pr-9 appearance-none bg-no-repeat;
+    background-position: right 0.65rem center;
+    background-size: 0.75rem;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8.5L1.5 4h9z'/%3E%3C/svg%3E");
+  }
+  .dark .select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8.5L1.5 4h9z'/%3E%3C/svg%3E");
+  }
+
+  /* ---- Checkbox / radio ------------------------------------------------ */
+  /* Reset the native control and rebuild the box so it picks up
+     theme-aligned slate borders + sky accent. Uses Tailwind's accent
+     utilities to color the check itself. */
+  .checkbox,
+  .radio {
+    @apply w-4 h-4 rounded border-slate-300 dark:border-slate-600
+           bg-white dark:bg-slate-800
+           text-sky-600 accent-sky-600
+           focus:ring-2 focus:ring-sky-500 focus:ring-offset-0
+           disabled:opacity-50 disabled:cursor-not-allowed
+           transition-colors;
+  }
+  .radio {
+    @apply rounded-full;
+  }
+
+  /* ---- Switch ---------------------------------------------------------- */
+  /* Pill-shaped on/off control. Render as a button with role="switch"
+     and aria-checked; the .switch-on class flips the visuals. */
+  .switch {
+    @apply relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full
+           bg-slate-300 dark:bg-slate-600 transition-colors
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .switch.switch-on {
+    @apply bg-sky-600;
+  }
+  .switch-thumb {
+    @apply pointer-events-none block h-5 w-5 translate-x-0.5 rounded-full bg-white shadow
+           transition-transform;
+  }
+  .switch.switch-on .switch-thumb {
+    @apply translate-x-[1.375rem];
+  }
+
+  /* ---- Validation states ------------------------------------------------ */
+  /* Apply alongside .input / .textarea / .select to flip the border +
+     focus ring without re-stating every rule. */
+  .input-error,
+  .textarea.input-error,
+  .select.input-error {
+    @apply border-red-400 dark:border-red-500
+           focus:ring-red-500 focus:border-red-500;
+  }
+  .input-warning,
+  .textarea.input-warning,
+  .select.input-warning {
+    @apply border-amber-400 dark:border-amber-500
+           focus:ring-amber-500 focus:border-amber-500;
+  }
+  .input-success,
+  .textarea.input-success,
+  .select.input-success {
+    @apply border-emerald-400 dark:border-emerald-500
+           focus:ring-emerald-500 focus:border-emerald-500;
+  }
+
+  /* ---- Input group (prefix / suffix slot) ----------------------------- */
+  /* Render a control alongside an icon or suffix label without losing
+     the focus ring on the outer wrapper. The wrapper carries the
+     border + ring; the inner control is borderless + transparent. */
+  .input-group {
+    @apply flex items-stretch w-full rounded-lg
+           bg-white dark:bg-slate-800
+           border border-slate-300 dark:border-slate-600
+           focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500
+           transition-colors;
+  }
+  .input-group > .input {
+    @apply border-0 bg-transparent shadow-none focus:ring-0 focus:border-0;
+  }
+  .input-group-prefix,
+  .input-group-suffix {
+    @apply inline-flex items-center px-3 text-muted text-sm select-none;
+  }
+
+  /* ---- Fieldset -------------------------------------------------------- */
+  .fieldset {
+    @apply flex flex-col gap-3 rounded-xl border border-line p-4
+           surface-1;
+  }
+  .fieldset-legend {
+    @apply text-sm font-semibold text-strong px-1;
+  }
+}
