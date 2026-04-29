@@ -30,7 +30,45 @@ export type {
   ThemeMode,
 } from "./components/ThemePickerOverlay";
 
-// Hook re-exports. Promoted in v0.2.0 from printer-dashboard.
+// v0.2.2 component additions: shadcn-style primitives + global
+// surfaces (toast, error dialog, page transition, breadcrumb,
+// tooltip, modal, spinner, badge).
+export { Modal } from "./components/Modal";
+export type { ModalProps, ModalSize } from "./components/Modal";
+export { Spinner } from "./components/Spinner";
+export type { SpinnerProps, SpinnerSize, SpinnerTone } from "./components/Spinner";
+export { Badge } from "./components/Badge";
+export type { BadgeProps, BadgeVariant, BadgeSize } from "./components/Badge";
+export { Tooltip } from "./components/Tooltip";
+export type { TooltipProps, TooltipSide } from "./components/Tooltip";
+export { Breadcrumb } from "./components/Breadcrumb";
+export type { BreadcrumbProps, BreadcrumbItem } from "./components/Breadcrumb";
+export { PageTransition } from "./components/PageTransition";
+export type {
+  PageTransitionProps,
+  PageTransitionDirection,
+} from "./components/PageTransition";
+export { Toaster, useToastContext } from "./components/Toaster";
+export type {
+  ToasterProps,
+  ToastInput,
+  ToastVariant,
+  ToastRecord,
+} from "./components/Toaster";
+export {
+  ErrorDialog,
+  ErrorDialogProvider,
+  useErrorDialogContext,
+} from "./components/ErrorDialog";
+export type {
+  ErrorDialogProps,
+  ErrorDialogProviderProps,
+  ErrorDialogAction,
+  ErrorDialogRequest,
+} from "./components/ErrorDialog";
+
+// Hook re-exports. Promoted in v0.2.0 from printer-dashboard;
+// expanded in v0.2.2 with a handful of standard utility hooks.
 export {
   useTheme,
   setTheme,
@@ -42,6 +80,11 @@ export { useFullscreen } from "./hooks/useFullscreen";
 export type { FullscreenApi } from "./hooks/useFullscreen";
 export { useVersionWatcher } from "./hooks/useVersionWatcher";
 export type { VersionWatcherState } from "./hooks/useVersionWatcher";
+export { useMediaQuery } from "./hooks/useMediaQuery";
+export { useDebounce } from "./hooks/useDebounce";
+export { useLocalStorage } from "./hooks/useLocalStorage";
+export { useToast } from "./hooks/useToast";
+export { useErrorDialog } from "./hooks/useErrorDialog";
 
 // Library re-exports. Version primitives the API helper / hook share.
 export {
@@ -60,6 +103,21 @@ export {
   applyForceRefresh,
 } from "./lib/version";
 export type { ServerVersion } from "./lib/version";
+
+// v0.2.2: centralised API client. Wires X-App-Version into the
+// version watcher, handles 401-with-loginUrl auto-redirect, and
+// surfaces a consistent ApiError shape with friendly messages.
+export {
+  createApiClient,
+  consumePostLoginReturnPath,
+  ApiError,
+} from "./lib/api";
+export type {
+  ApiClient,
+  ApiClientOptions,
+  ApiRequestOptions,
+  ApiKind,
+} from "./lib/api";
 
 // Vite plugin re-export. Consumers wire this into their
 // vite.config.ts to bake __APP_VERSION__ + write dist/version.json.

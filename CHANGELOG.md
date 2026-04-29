@@ -4,7 +4,136 @@ All notable changes to this repo. Versions follow semver: patch for
 bug fixes, minor for new components or new config keys, major for
 breaking shape changes to existing config keys.
 
-## v0.2.1 — 2026-04-29 — Header right-alignment regression fix
+## v0.2.2 - 2026-04-29 - shadcn-style primitives + global surfaces + API client
+
+Second batch of EXTRACTION-GAPS.md follow-ups. The v0.2.0 round
+covered foundation pieces (animations, utilities, version
+plumbing); this round fills in the day-to-day primitives every app
+in the family ends up reinventing: a toast surface, a modal error
+dialog, a generic Modal primitive, plus the small utility set
+(Spinner / Badge / Tooltip / Breadcrumb / PageTransition) and a
+centralised API client that wires the version watcher in for free.
+
+No existing component, hook, or stylesheet was modified. Worker B
+(brain-v2) and Worker P (printer-dashboard) own the existing
+files and will promote any fixes upstream concurrently; this
+release is purely additive.
+
+### Components
+
+- **Modal** - generic dialog primitive. Glass-themed backdrop,
+  focus trap, Esc + click-outside close (both opt-out via props),
+  size tiers `sm` / `md` / `lg` / `xl` / `full`. Restores focus to
+  the previously focused element on close. ErrorDialog is built on
+  top of it; ThemePickerOverlay predates it but could collapse
+  onto Modal in a future pass.
+- **Spinner** - small inline loading indicator for buttons and
+  tight spaces. Sizes `xs` / `sm` / `md` / `lg`, tones `current` /
+  `primary` / `muted` / `white`. Honours `prefers-reduced-motion`.
+  Distinct from `LoadingSkeleton` (page-level) by intent.
+- **Badge** - status / count / label pill. Variants `default` /
+  `outline` / `primary` / `success` / `warning` / `danger` /
+  `info`, sizes `sm` / `md`, optional leading dot indicator.
+- **Tooltip** - accessible floating label. Hover (desktop) and
+  long-press (mobile) triggers. Auto-flips to the opposite side
+  on viewport overflow and clamps horizontally to stay on-screen.
+  Wires up `aria-describedby` on the trigger.
+- **Breadcrumb** - generic trail. Truncates middle items on
+  mobile, marks the last item with `aria-current="page"`,
+  optional router-aware `LinkComponent` slot so apps using
+  react-router or similar can swap in `NavLink`.
+- **PageTransition** - wraps page content with a fade or slide
+  animation between routes. Configurable duration (default
+  200 ms) and direction (`fade` / `right` / `left`). Respects
+  `prefers-reduced-motion`.
+- **Toaster + useToast** - toast notification surface. A `<Toaster>`
+  provider near the app root, plus `useToast()` returning
+  `{ toast, dismiss, clear }`. Variants `default` / `success` /
+  `warning` / `danger` / `info`, hover-pause auto-dismiss timer,
+  bottom-right stack on desktop, top-center on mobile, glass
+  treatment.
+- **ErrorDialog + ErrorDialogProvider + useErrorDialog** - modal
+  error dialog for caught exceptions that warrant user attention.
+  Title, description, optional error code chip, primary +
+  secondary actions. Built on Modal. Provider mounts a single
+  dialog and queues subsequent calls so two failures don't open
+  two stacked modals.
+
+### Hooks
+
+- **useMediaQuery** - subscribe to a CSS media query and re-render
+  on match-state change. SSR-safe (returns `false` during SSR and
+  hydrates after mount). Used everywhere consumers need an
+  `isMobile` / `prefersReducedMotion` runtime check.
+- **useDebounce** - debounce a value over time. Standard helper
+  for search-as-you-type / autosave inputs. Default 250 ms delay.
+- **useLocalStorage** - typed localStorage hook. Mirrors
+  `useState` shape, persists writes, syncs across tabs via the
+  `storage` event, SSR-safe, tolerant of broken JSON / private-mode
+  failures.
+
+### Library
+
+- **lib/api** - centralised API client. Lifted from
+  printer-dashboard's v0.14.5 `lib/api.ts` and generalised:
+  - Response type sniffing: HTML 5xx pages no longer crash JSON
+    parsing; the client surfaces an `ApiError` with `kind:
+    "non_json"` instead.
+  - 401 auto-redirect: when the body has a `loginUrl`, the
+    client stamps the current path into a configurable
+    localStorage key and navigates to login. Pair with
+    `consumePostLoginReturnPath()` on the auth-callback page.
+  - `X-App-Version` feed: every response is read for the header
+    and forwarded to `noteServerVersion()` so the existing
+    `useVersionWatcher` picks up server bumps without extra
+    wiring.
+  - Friendly status messages: `ApiError.message` carries a short
+    user-facing string mapped from the HTTP status; the
+    raw status / kind / body are kept for programmatic handling.
+  - JSON parse safety: malformed JSON becomes a specific
+    `kind: "parse"` error rather than killing the whole call.
+
+### Styles
+
+- **styles/forms.css** - shared form-control styling so brain-v2's
+  Capture forms and printer-dashboard's Settings forms look
+  consistent. Builds on the existing `.input` atom from
+  utilities.css with `.textarea`, `.select` (with painted caret),
+  `.checkbox`, `.radio`, `.switch` (+ `.switch-thumb`,
+  `.switch-on`), validation modifiers (`.input-error` /
+  `.input-warning` / `.input-success`), `.input-group` with
+  prefix / suffix slots, `.fieldset` + `.fieldset-legend`, and a
+  `.field` / `.field-label` / `.field-helper` / `.field-error`
+  triplet for the standard label-input-helper layout. Opt-in via
+  `@import "waki-shell/styles/forms.css"` after Tailwind's
+  component layer (not added to the styles/index.css barrel; it's
+  optional).
+
+### `dist/shell.json` schema additions
+
+Backward-compatible. v0.2.0 consumers reading the flat
+`components` / `hooks` / `styles` arrays continue to work
+unchanged. New in v0.2.2:
+
+- `exports.components: { [name]: { addedIn: string } }` - per
+  component metadata keyed by name.
+- `exports.hooks: { [name]: { addedIn: string } }`
+- `exports.styles: { [path]: { addedIn: string } }`
+- `exports.templates: { [path]: { addedIn: string } }`
+- `exports.vitePlugins: { [name]: { addedIn: string } }`
+- `exports.libs: { [path]: { addedIn: string } }` - new field;
+  tracks `lib/version` and the new `lib/api`.
+
+Drives "new in this release" badges in the consumer's about /
+help surface without needing a parallel changelog parser.
+
+### Package.json
+
+- `version` bumped to `0.2.2`.
+- `exports["./styles/forms.css"]` added so the new stylesheet is
+  importable without poking into `src/`.
+
+## v0.2.1 - 2026-04-29 - Header right-alignment regression fix
 
 `Header.tsx` was placing the actions cluster directly after the
 brand on mobile because the `ml-auto` / `ml-0` heuristic keyed off

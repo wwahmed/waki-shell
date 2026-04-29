@@ -1,6 +1,6 @@
 {
   "name": "waki-shell",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": true,
   "description": "Shared shell scaffolding (Header, Splash, UpdateBanner, UserMenu, state components) plus a layer-1 JSON config bundle for Waqas's apps. Consumed by printer-dashboard and waki-brain via the dist/shell.json contract.",
   "license": "MIT",
@@ -14,6 +14,7 @@
     "./styles/animations.css": "./src/styles/animations.css",
     "./styles/utilities.css": "./src/styles/utilities.css",
     "./styles/dark-mode-safety.css": "./src/styles/dark-mode-safety.css",
+    "./styles/forms.css": "./src/styles/forms.css",
     "./styles/index.css": "./src/styles/index.css",
     "./tailwind.config.shared.js": "./tailwind.config.shared.js",
     "./templates/theme-bootstrap.html": "./templates/theme-bootstrap.html",

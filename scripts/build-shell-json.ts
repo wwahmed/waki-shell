@@ -11,18 +11,23 @@
  *     version: "<pkg.version>",
  *     gitSha: "<short-sha-or-unknown>",
  *     builtAt: "<ISO timestamp>",
- *     config: {
- *       breakpoints: {...},
- *       header: {...},
- *       bottomTabNav: {...},
- *       sidebar: {...},
- *       splash: {...},
- *       updateBanner: {...},
- *       animations: {...},
- *       tapTargets: {...},
- *       states: {...}
- *     },
- *     components: ["Header", "BottomTabNav", ...]   // names shipped at this version
+ *     config: { breakpoints, header, bottomTabNav, ... },
+ *     // Flat string arrays for v0.2.0 consumers reading the simple list.
+ *     components: ["AppShell", "Header", ...],
+ *     hooks: [...],
+ *     styles: [...],
+ *     templates: [...],
+ *     vitePlugins: [...],
+ *     // Per-export metadata. v0.2.2-shaped consumers can read the
+ *     // `addedIn` field to drive "new in this version" UI / docs
+ *     // highlights without keeping a parallel changelog parser.
+ *     exports: {
+ *       components: { [name]: { addedIn: string } },
+ *       hooks:      { [name]: { addedIn: string } },
+ *       styles:     { [path]: { addedIn: string } },
+ *       templates:  { [path]: { addedIn: string } },
+ *       vitePlugins:{ [name]: { addedIn: string } }
+ *     }
  *   }
  *
  * Run: `npm run build` (from waki-shell repo root)
@@ -70,32 +75,63 @@ function pkgVersion(): string {
   return "0.0.0";
 }
 
-const COMPONENTS = [
-  "AppShell",
-  "Header",
-  "BottomTabNav",
-  "Sidebar",
-  "Splash",
-  "UpdateBanner",
-  "UserMenu",
-  "EmptyState",
-  "LoadingSkeleton",
-  "ErrorState",
-  "ThemePickerOverlay",
-];
+interface ExportMeta {
+  addedIn: string;
+}
 
-const HOOKS = ["useTheme", "useFullscreen", "useVersionWatcher"];
+const COMPONENTS: Record<string, ExportMeta> = {
+  AppShell: { addedIn: "0.1.0" },
+  Header: { addedIn: "0.1.0" },
+  BottomTabNav: { addedIn: "0.1.0" },
+  Sidebar: { addedIn: "0.1.0" },
+  Splash: { addedIn: "0.1.0" },
+  UpdateBanner: { addedIn: "0.1.0" },
+  UserMenu: { addedIn: "0.1.0" },
+  EmptyState: { addedIn: "0.1.0" },
+  LoadingSkeleton: { addedIn: "0.1.0" },
+  ErrorState: { addedIn: "0.1.0" },
+  ThemePickerOverlay: { addedIn: "0.2.0" },
+  Modal: { addedIn: "0.2.2" },
+  Spinner: { addedIn: "0.2.2" },
+  Badge: { addedIn: "0.2.2" },
+  Tooltip: { addedIn: "0.2.2" },
+  Breadcrumb: { addedIn: "0.2.2" },
+  PageTransition: { addedIn: "0.2.2" },
+  Toaster: { addedIn: "0.2.2" },
+  ErrorDialog: { addedIn: "0.2.2" },
+};
 
-const STYLES = [
-  "styles/animations.css",
-  "styles/utilities.css",
-  "styles/dark-mode-safety.css",
-  "styles/index.css",
-];
+const HOOKS: Record<string, ExportMeta> = {
+  useTheme: { addedIn: "0.2.0" },
+  useFullscreen: { addedIn: "0.2.0" },
+  useVersionWatcher: { addedIn: "0.2.0" },
+  useMediaQuery: { addedIn: "0.2.2" },
+  useDebounce: { addedIn: "0.2.2" },
+  useLocalStorage: { addedIn: "0.2.2" },
+  useToast: { addedIn: "0.2.2" },
+  useErrorDialog: { addedIn: "0.2.2" },
+};
 
-const TEMPLATES = ["templates/theme-bootstrap.html"];
+const STYLES: Record<string, ExportMeta> = {
+  "styles/animations.css": { addedIn: "0.2.0" },
+  "styles/utilities.css": { addedIn: "0.2.0" },
+  "styles/dark-mode-safety.css": { addedIn: "0.2.0" },
+  "styles/index.css": { addedIn: "0.2.0" },
+  "styles/forms.css": { addedIn: "0.2.2" },
+};
 
-const VITE_PLUGINS = ["versionPlugin"];
+const TEMPLATES: Record<string, ExportMeta> = {
+  "templates/theme-bootstrap.html": { addedIn: "0.2.0" },
+};
+
+const VITE_PLUGINS: Record<string, ExportMeta> = {
+  versionPlugin: { addedIn: "0.2.0" },
+};
+
+const LIBS: Record<string, ExportMeta> = {
+  "lib/version": { addedIn: "0.2.0" },
+  "lib/api": { addedIn: "0.2.2" },
+};
 
 const payload = {
   version: pkgVersion(),
@@ -112,11 +148,25 @@ const payload = {
     tapTargets,
     states,
   },
-  components: COMPONENTS,
-  hooks: HOOKS,
-  styles: STYLES,
-  templates: TEMPLATES,
-  vitePlugins: VITE_PLUGINS,
+  // Backward-compatible flat lists (the v0.2.0 schema). Consumers
+  // that read the raw arrays keep working unchanged.
+  components: Object.keys(COMPONENTS),
+  hooks: Object.keys(HOOKS),
+  styles: Object.keys(STYLES),
+  templates: Object.keys(TEMPLATES),
+  vitePlugins: Object.keys(VITE_PLUGINS),
+  // v0.2.2 schema addition: per-export metadata keyed by name.
+  // Each entry tracks the version that introduced it so consumers
+  // can drive "new in this release" docs / changelog views without
+  // a side-channel parser.
+  exports: {
+    components: COMPONENTS,
+    hooks: HOOKS,
+    styles: STYLES,
+    templates: TEMPLATES,
+    vitePlugins: VITE_PLUGINS,
+    libs: LIBS,
+  },
 };
 
 const distDir = resolve(repoRoot, "dist");
@@ -129,4 +179,4 @@ const outPath = resolve(distDir, "shell.json");
 writeFileSync(outPath, JSON.stringify(payload, null, 2) + "\n", "utf-8");
 
 console.log(`[waki-shell] wrote ${outPath}`);
-console.log(`[waki-shell] version=${payload.version} gitSha=${payload.gitSha} components=${COMPONENTS.length}`);
+console.log(`[waki-shell] version=${payload.version} gitSha=${payload.gitSha} components=${payload.components.length} hooks=${payload.hooks.length}`);

@@ -1,7 +1,7 @@
 {
-  "version": "0.2.1",
-  "gitSha": "0b9c1ca",
-  "builtAt": "2026-04-29T22:45:42.837Z",
+  "version": "0.2.2",
+  "gitSha": "8cd3649",
+  "builtAt": "2026-04-29T23:45:03.137Z",
   "config": {
     "breakpoints": {
       "sm": 640,
@@ -128,23 +128,159 @@
     "EmptyState",
     "LoadingSkeleton",
     "ErrorState",
-    "ThemePickerOverlay"
+    "ThemePickerOverlay",
+    "Modal",
+    "Spinner",
+    "Badge",
+    "Tooltip",
+    "Breadcrumb",
+    "PageTransition",
+    "Toaster",
+    "ErrorDialog"
   ],
   "hooks": [
     "useTheme",
     "useFullscreen",
-    "useVersionWatcher"
+    "useVersionWatcher",
+    "useMediaQuery",
+    "useDebounce",
+    "useLocalStorage",
+    "useToast",
+    "useErrorDialog"
   ],
   "styles": [
     "styles/animations.css",
     "styles/utilities.css",
     "styles/dark-mode-safety.css",
-    "styles/index.css"
+    "styles/index.css",
+    "styles/forms.css"
   ],
   "templates": [
     "templates/theme-bootstrap.html"
   ],
   "vitePlugins": [
     "versionPlugin"
-  ]
+  ],
+  "exports": {
+    "components": {
+      "AppShell": {
+        "addedIn": "0.1.0"
+      },
+      "Header": {
+        "addedIn": "0.1.0"
+      },
+      "BottomTabNav": {
+        "addedIn": "0.1.0"
+      },
+      "Sidebar": {
+        "addedIn": "0.1.0"
+      },
+      "Splash": {
+        "addedIn": "0.1.0"
+      },
+      "UpdateBanner": {
+        "addedIn": "0.1.0"
+      },
+      "UserMenu": {
+        "addedIn": "0.1.0"
+      },
+      "EmptyState": {
+        "addedIn": "0.1.0"
+      },
+      "LoadingSkeleton": {
+        "addedIn": "0.1.0"
+      },
+      "ErrorState": {
+        "addedIn": "0.1.0"
+      },
+      "ThemePickerOverlay": {
+        "addedIn": "0.2.0"
+      },
+      "Modal": {
+        "addedIn": "0.2.2"
+      },
+      "Spinner": {
+        "addedIn": "0.2.2"
+      },
+      "Badge": {
+        "addedIn": "0.2.2"
+      },
+      "Tooltip": {
+        "addedIn": "0.2.2"
+      },
+      "Breadcrumb": {
+        "addedIn": "0.2.2"
+      },
+      "PageTransition": {
+        "addedIn": "0.2.2"
+      },
+      "Toaster": {
+        "addedIn": "0.2.2"
+      },
+      "ErrorDialog": {
+        "addedIn": "0.2.2"
+      }
+    },
+    "hooks": {
+      "useTheme": {
+        "addedIn": "0.2.0"
+      },
+      "useFullscreen": {
+        "addedIn": "0.2.0"
+      },
+      "useVersionWatcher": {
+        "addedIn": "0.2.0"
+      },
+      "useMediaQuery": {
+        "addedIn": "0.2.2"
+      },
+      "useDebounce": {
+        "addedIn": "0.2.2"
+      },
+      "useLocalStorage": {
+        "addedIn": "0.2.2"
+      },
+      "useToast": {
+        "addedIn": "0.2.2"
+      },
+      "useErrorDialog": {
+        "addedIn": "0.2.2"
+      }
+    },
+    "styles": {
+      "styles/animations.css": {
+        "addedIn": "0.2.0"
+      },
+      "styles/utilities.css": {
+        "addedIn": "0.2.0"
+      },
+      "styles/dark-mode-safety.css": {
+        "addedIn": "0.2.0"
+      },
+      "styles/index.css": {
+        "addedIn": "0.2.0"
+      },
+      "styles/forms.css": {
+        "addedIn": "0.2.2"
+      }
+    },
+    "templates": {
+      "templates/theme-bootstrap.html": {
+        "addedIn": "0.2.0"
+      }
+    },
+    "vitePlugins": {
+      "versionPlugin": {
+        "addedIn": "0.2.0"
+      }
+    },
+    "libs": {
+      "lib/version": {
+        "addedIn": "0.2.0"
+      },
+      "lib/api": {
+        "addedIn": "0.2.2"
+      }
+    }
+  }
 }
