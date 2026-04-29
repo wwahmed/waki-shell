@@ -1,0 +1,26 @@
+{
+  "name": "waki-shell",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared shell scaffolding (Header, Splash, UpdateBanner, UserMenu, state components) plus a layer-1 JSON config bundle for Waqas's apps. Consumed by printer-dashboard and waki-brain via the dist/shell.json contract.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "node --import tsx scripts/build-shell-json.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "shell",
+    "scaffolding",
+    "react",
+    "tailwind",
+    "design-system"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.16.0",
+    "@types/react": "^18.3.0",
+    "react": "^18.3.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

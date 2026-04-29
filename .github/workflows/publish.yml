@@ -1,0 +1,52 @@
+name: Publish shell.json
+
+# Triggered on push to main, but only when the source config or the
+# build script changes — we don't want a recursive trigger when the
+# action itself commits dist/shell.json back. The `[skip ci]` in the
+# commit message below is the second layer of recursion-prevention.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/config/**'
+      - 'package.json'
+      - 'scripts/build-shell-json.ts'
+
+# Built-in GITHUB_TOKEN with explicit `contents: write` is enough to
+# commit back to the repo. No PAT setup required from the repo owner.
+# Limitation: commits made by the built-in token do NOT trigger
+# downstream workflows. If we ever need a sibling repo's CI to react
+# to a shell.json publish, we'll switch this to a PAT — for v1, no
+# downstream automation is wired, so this is fine.
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build dist/shell.json
+        run: npm run build
+
+      - name: Commit dist/shell.json if changed
+        run: |
+          if git diff --quiet dist/shell.json 2>/dev/null; then
+            echo "No changes to dist/shell.json; nothing to publish."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add dist/shell.json
+            git commit -m "chore: publish dist/shell.json [skip ci]"
+            git push
+          fi

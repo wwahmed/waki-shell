@@ -1,0 +1,132 @@
+{
+  "version": "0.1.0",
+  "gitSha": "dce306b",
+  "builtAt": "2026-04-29T16:50:11.937Z",
+  "config": {
+    "breakpoints": {
+      "sm": 640,
+      "md": 768,
+      "lg": 1024,
+      "xl": 1280,
+      "mobileNavBelow": 768
+    },
+    "header": {
+      "heightTw": "h-14",
+      "heightPx": 56,
+      "zIndex": 30,
+      "paddingX": {
+        "mobile": "px-2",
+        "desktop": "sm:px-3"
+      },
+      "brandGap": "gap-2.5",
+      "actionsGap": "gap-1 sm:gap-2"
+    },
+    "bottomTabNav": {
+      "hideAt": "md",
+      "zIndex": 30,
+      "maxTabs": 5,
+      "respectsSafeArea": true
+    },
+    "sidebar": {
+      "widthTw": "md:w-56",
+      "widthPx": 224,
+      "hideBelow": "md",
+      "collapsibleAt": "lg"
+    },
+    "splash": {
+      "minDurationMs": 700,
+      "hardTimeoutMs": 4000,
+      "fadeOutMs": 280,
+      "zIndex": 100
+    },
+    "updateBanner": {
+      "idleAutoRefreshMs": 30000,
+      "postRefreshCooldownMs": 60000,
+      "pollIntervalMs": 60000,
+      "zIndex": 55
+    },
+    "animations": {
+      "fadeIn": {
+        "className": "animate-fadeIn",
+        "durationMs": 180,
+        "easing": "ease-out"
+      },
+      "fadeInUp": {
+        "className": "animate-fadeInUp",
+        "durationMs": 200,
+        "easing": "ease-out"
+      },
+      "modalIn": {
+        "className": "animate-modalIn",
+        "durationMs": 180,
+        "easing": "ease-out"
+      },
+      "overlayIn": {
+        "className": "animate-overlayIn",
+        "durationMs": 150,
+        "easing": "ease-out"
+      },
+      "toastIn": {
+        "className": "animate-toastIn",
+        "durationMs": 180,
+        "easing": "ease-out"
+      },
+      "cardIn": {
+        "className": "animate-cardIn",
+        "durationMs": 220,
+        "easing": "ease-out"
+      },
+      "shimmer": {
+        "className": "animate-shimmer",
+        "durationMs": 1600,
+        "easing": "ease-in-out",
+        "loop": true
+      },
+      "splashBounce": {
+        "className": "animate-splashBounce",
+        "durationMs": 1200,
+        "easing": "ease-in-out",
+        "loop": true
+      },
+      "staggerSteps": 8,
+      "staggerDelayMs": 40,
+      "respectsReducedMotion": true
+    },
+    "tapTargets": {
+      "minPx": 44,
+      "minTw": "h-11 w-11",
+      "iconPx": 28,
+      "iconTw": "w-7 h-7"
+    },
+    "states": {
+      "loading": {
+        "component": "LoadingSkeleton",
+        "rule": "Render this on first fetch. Never render alongside data — once data arrives, swap completely."
+      },
+      "empty": {
+        "component": "EmptyState",
+        "rule": "Render this when the fetch succeeded but returned zero results. Always offer a primary action so the user knows how to populate the state."
+      },
+      "error": {
+        "component": "ErrorState",
+        "rule": "Render this when the fetch failed. Always include a Try-again affordance unless the failure is permanent (e.g. 404 on a removed entity)."
+      },
+      "success": {
+        "component": "(your data view)",
+        "rule": "The default; render when data is available and non-empty. Do not show skeletons or stale data alongside."
+      }
+    }
+  },
+  "components": [
+    "AppShell",
+    "Header",
+    "BottomTabNav",
+    "Sidebar",
+    "Splash",
+    "UpdateBanner",
+    "UserMenu",
+    "EmptyState",
+    "LoadingSkeleton",
+    "ErrorState"
+  ]
+}
