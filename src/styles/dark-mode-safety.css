@@ -1,0 +1,41 @@
+/* waki-shell / dark-mode-safety.css
+ * ----------------------------------------------------------------------------
+ * "Nuclear" dark-mode safety net. In dark mode, any element that
+ * still uses a light bg utility (`bg-white`, `bg-slate-50`, etc.) is
+ * forced onto a dark slate that matches the page palette. The rules
+ * use `!important` to close a source-order loophole observed on at
+ * least one tablet build, where Tailwind's utility outranked the
+ * blanket rule and left white cards showing in dark mode.
+ *
+ * Source: extracted from printer-dashboard's index.css. The slate
+ * shades match the per-app Tailwind config (slate-800 #324663, slate-
+ * 900 #243550). Consumers should pair this with
+ * `tailwind.config.shared.js` so the literal RGB values stay aligned.
+ *
+ * Semi-transparent overlays (`bg-white/30`, `bg-white/10`) are
+ * excluded so progress shimmers and subtle wash effects keep their
+ * intended light tint. */
+
+.dark .bg-white:not([class*="bg-white/"]),
+.dark .sm\:bg-white,
+.dark .md\:bg-white,
+.dark .lg\:bg-white,
+.dark .xl\:bg-white {
+  background-color: rgb(50 70 99) !important; /* slate-800 #324663 */
+}
+
+.dark .bg-slate-50:not([class*="bg-slate-50/"]),
+.dark .sm\:bg-slate-50,
+.dark .md\:bg-slate-50,
+.dark .lg\:bg-slate-50,
+.dark .xl\:bg-slate-50 {
+  background-color: rgb(36 53 80) !important; /* slate-900 #243550 */
+}
+
+.dark .bg-gray-50:not([class*="bg-gray-50/"]) {
+  background-color: rgb(36 53 80) !important;
+}
+
+.dark .bg-slate-100:not([class*="bg-slate-100/"]) {
+  background-color: rgb(50 70 99) !important;
+}

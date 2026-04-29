@@ -1,0 +1,15 @@
+/* waki-shell / index.css
+ * ----------------------------------------------------------------------------
+ * Convenience barrel that pulls in every shell stylesheet a typical
+ * consumer app wants. Drop one
+ *
+ *   @import "waki-shell/styles/index.css";
+ *
+ * into the consumer's index.css (after `@tailwind components;`) and
+ * the animations, surface utilities, and dark-mode safety net are all
+ * wired up. Apps that want to cherry-pick can import the individual
+ * files directly instead. */
+
+@import "./animations.css";
+@import "./utilities.css";
+@import "./dark-mode-safety.css";

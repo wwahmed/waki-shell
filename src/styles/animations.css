@@ -1,0 +1,101 @@
+/* waki-shell / animations.css
+ * ----------------------------------------------------------------------------
+ * Keyframes and `.animate-X` classes referenced by the shell components.
+ * The shell.json `animations` config names each className; this file
+ * supplies the matching CSS so a consumer can drop one `@import
+ * "waki-shell/animations.css"` into their stylesheet and have every
+ * Splash / UpdateBanner / UserMenu / LoadingSkeleton animation work
+ * without re-implementing the keyframes.
+ *
+ * Source: extracted from printer-dashboard's index.css. The animation
+ * names + durations match shell.json so the contract is consistent.
+ *
+ * Keep these short (under 300 ms) and use ease-out so things settle
+ * quickly. The motion-reduce block at the bottom disables them for
+ * users who set prefers-reduced-motion. */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(-12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+@keyframes splashBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40%           { transform: translateY(-6px); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.animate-fadeIn       { animation: fadeIn       180ms ease-out both; }
+.animate-fadeInUp     { animation: fadeInUp     200ms ease-out both; }
+.animate-toastIn      { animation: toastIn      180ms ease-out both; }
+.animate-modalIn      { animation: modalIn      180ms ease-out both; }
+.animate-overlayIn    { animation: overlayIn    150ms ease-out both; }
+.animate-cardIn       { animation: cardIn       220ms ease-out both; }
+.animate-shimmer      { animation: shimmer      1600ms ease-in-out infinite; }
+.animate-splashBounce { animation: splashBounce 1200ms ease-in-out infinite; }
+.animate-slideInRight { animation: slideInRight 240ms cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.animate-slideInLeft  { animation: slideInLeft  240ms cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+/* Stagger helper for list-of-cards mounts. */
+.stagger-0 { animation-delay: 0ms; }
+.stagger-1 { animation-delay: 40ms; }
+.stagger-2 { animation-delay: 80ms; }
+.stagger-3 { animation-delay: 120ms; }
+.stagger-4 { animation-delay: 160ms; }
+.stagger-5 { animation-delay: 200ms; }
+.stagger-6 { animation-delay: 240ms; }
+.stagger-7 { animation-delay: 280ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fadeIn,
+  .animate-fadeInUp,
+  .animate-toastIn,
+  .animate-modalIn,
+  .animate-overlayIn,
+  .animate-cardIn,
+  .animate-shimmer,
+  .animate-splashBounce,
+  .animate-slideInRight,
+  .animate-slideInLeft {
+    animation: none !important;
+  }
+}

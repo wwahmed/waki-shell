@@ -1,0 +1,89 @@
+/* waki-shell / utilities.css
+ * ----------------------------------------------------------------------------
+ * Foundation utility classes every consumer app needs: surface tokens
+ * (`surface-page`, `surface-1`, etc.), text-strength tokens, the
+ * standard button family (`btn`, `btn-primary`, ...), the card
+ * containers (`card`, `card-elevated`), and the standard input shape.
+ *
+ * These were ad-hoc in printer-dashboard's index.css under
+ * `@layer components`. Promoted here so any waki-shell consumer can
+ * drop one `@import "waki-shell/utilities.css"` into their Tailwind
+ * stylesheet and have the same atoms ready to compose.
+ *
+ * Tailwind class composition is preserved via `@apply`, which means
+ * this file MUST be processed by Tailwind during the consumer's build
+ * (typical: drop the @import inside a `@layer components { ... }`
+ * block in the consumer's index.css). */
+
+@layer components {
+  /* ---- Surfaces (page bg, cards, elevated cards, modals) ----------------- */
+  /* Dark depth strategy: page bg < cards < elevated/modals. Each step
+     is a ~10pt brighter slate so panels visibly float off the page. */
+  .surface-page  { @apply bg-slate-50 dark:bg-slate-900; }
+  .surface-1     { @apply bg-white dark:bg-slate-800; }
+  .surface-2     { @apply bg-slate-50 dark:bg-slate-700; }
+  .surface-3     { @apply bg-white dark:bg-slate-700; }
+  .surface-muted { @apply bg-slate-100 dark:bg-slate-800/70; }
+
+  /* ---- Borders / lines --------------------------------------------------- */
+  .border-line     { @apply border-slate-300 dark:border-slate-600; }
+  .border-line-2   { @apply border-slate-400 dark:border-slate-500; }
+  .border-line-soft { @apply border-slate-300/80 dark:border-slate-600/80; }
+
+  /* ---- Text strength tokens --------------------------------------------- */
+  .text-strong { @apply text-slate-900 dark:text-slate-100; }
+  .text-body   { @apply text-slate-700 dark:text-slate-200; }
+  .text-subtle { @apply text-slate-600 dark:text-slate-300; }
+  .text-muted  { @apply text-slate-500 dark:text-slate-400; }
+  .text-faint  { @apply text-slate-400 dark:text-slate-500; }
+
+  /* ---- Buttons ---------------------------------------------------------- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium
+           transition-all duration-150 active:scale-95 motion-reduce:active:scale-100
+           select-none touch-manipulation;
+    min-height: 44px;
+  }
+  .btn-primary {
+    @apply btn bg-sky-600 text-white hover:bg-sky-500
+           disabled:bg-slate-200 disabled:text-slate-400
+           dark:disabled:bg-slate-700 dark:disabled:text-slate-500;
+  }
+  .btn-secondary {
+    @apply btn bg-slate-200 text-slate-800 hover:bg-slate-300 ring-1 ring-slate-300
+           dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600 dark:ring-slate-600
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-500
+           disabled:bg-slate-200 disabled:text-slate-400
+           dark:disabled:bg-slate-700 dark:disabled:text-slate-500;
+  }
+  .btn-warning {
+    @apply btn bg-amber-600 text-white hover:bg-amber-500
+           disabled:bg-slate-200 disabled:text-slate-400
+           dark:disabled:bg-slate-700 dark:disabled:text-slate-500;
+  }
+
+  /* ---- Cards ------------------------------------------------------------ */
+  /* Solid background-color (via surface-1 / surface-3) plus a crisp
+     dark-mode shadow. The earlier gradient-based card chrome left
+     bg-white showing through on tablets where gradient compositing
+     got wedged. Solid colours dodge the whole class of bug. */
+  .card {
+    @apply surface-1 border border-line rounded-xl p-4
+           shadow-sm dark:shadow-lg dark:shadow-black/40;
+  }
+  .card-elevated {
+    @apply surface-3 border border-line-2 rounded-xl p-4
+           shadow-md dark:shadow-xl dark:shadow-black/50;
+  }
+
+  /* ---- Inputs ----------------------------------------------------------- */
+  .input {
+    @apply w-full rounded-lg px-3 py-2.5 text-strong
+           bg-white border border-slate-300 placeholder-slate-400
+           dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-500
+           focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500;
+  }
+}
