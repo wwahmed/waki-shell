@@ -7,7 +7,7 @@ Shared shell scaffolding for Waqas's apps. Component scaffolds (Header, BottomTa
 | Repo | https://github.com/wwahmed/waki-shell (private) |
 | Local | `~/workspaces/waki-shell/` |
 | Tech | TypeScript + React (no bundler — components ship as `.tsx` source for consumers to copy or import directly) |
-| Published config URL | https://raw.githubusercontent.com/wwahmed/waki-shell/main/dist/shell.json |
+| Published config | `dist/shell.json` (committed to `main`). Consumed via backend proxy while the repo is private; once public, fetchable directly at `https://raw.githubusercontent.com/wwahmed/waki-shell/main/dist/shell.json`. |
 | Consumers | [printer-dashboard](https://github.com/wwahmed/printer-dashboard), [waki-brain](https://github.com/wwahmed/waki-brain) |
 
 ## What's in here
@@ -52,7 +52,9 @@ Two consumption modes:
 
 1. **Component scaffolds** are React `.tsx` source files. Consuming apps copy them into their own `frontend/src/components/shell/` directory once and customise as needed. v1 is a manual `cp` workflow; an automated `sync-into-app.ts` CLI is a follow-up. The components are intentionally app-agnostic: every app-specific bit (logo, wordmark, nav entries, theme picker, attention badges) is a prop or render slot, so the same component file works across apps.
 
-2. **Runtime config** lives in `dist/shell.json`. Consuming apps `fetch()` it on boot, cache it locally, and apply the latest values (tap-target minimum, splash timing, animation tokens, etc.) without rebuilding. Mirrors the [waki-themes](https://github.com/wwahmed/waki-themes) `dist/themes.json` pattern.
+2. **Runtime config** lives in `dist/shell.json`. Consuming apps fetch it on boot, cache it locally, and apply the latest values (tap-target minimum, splash timing, animation tokens, etc.) without rebuilding. Mirrors the [waki-themes](https://github.com/wwahmed/waki-themes) `dist/themes.json` pattern.
+
+   While the repo is private, consumers proxy the file through their own backend — same shape that waki-brain already uses for `dist/themes.json` (`GET /api/themes/bundle` → reads `~/workspaces/waki-themes/dist/themes.json` off disk). Once the repo goes public, consumers can fetch `https://raw.githubusercontent.com/wwahmed/waki-shell/main/dist/shell.json` directly.
 
 ## Components
 
