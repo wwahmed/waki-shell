@@ -1,0 +1,54 @@
+<!--
+  waki-shell / templates / theme-bootstrap.html
+  ----------------------------------------------------------------------------
+  Drop this <script> block into the consumer's index.html <head>,
+  BEFORE any stylesheet or main script. It sets `dark` or `light` on
+  <html> synchronously so the very first paint already has the
+  correct Tailwind variant active. Without it, the initial paint
+  resolves Tailwind's `dark:` variants against whatever class arrives
+  via React after hydration, producing the "dark page + light cards"
+  flash on tablets with stale precached bundles.
+
+  The matching logic in src/hooks/useTheme.ts mirrors this script
+  exactly. Order of precedence (HARD RULE — saved choice always wins
+  over system preference):
+    1. localStorage("<storageKey>") = "dark" or "light"
+    2. OS prefers-color-scheme: dark
+    3. fall back to light
+
+  Consumer must replace <storageKey> with whatever value they passed
+  to setThemeStorageKey() (default "ws:theme"). Apps that override
+  the default — printer-dashboard uses "pd:theme" — should swap the
+  literal here too.
+
+  Uses classList.add + classList.remove (not toggle(force)) to avoid
+  an old-Safari quirk with the two-arg toggle form silently no-oping
+  in PWA contexts.
+-->
+<script>
+  (function () {
+    var STORAGE_KEY = "ws:theme";
+    var html = document.documentElement;
+    try {
+      var t = localStorage.getItem(STORAGE_KEY);
+      if (t === "dark" || t === "light") {
+        html.classList.add(t);
+        html.classList.remove(t === "dark" ? "light" : "dark");
+      } else if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        html.classList.add("dark");
+        html.classList.remove("light");
+      } else {
+        html.classList.add("light");
+        html.classList.remove("dark");
+      }
+    } catch (e) {
+      // localStorage can throw in private mode / restricted iframes;
+      // pick light as the safe default.
+      html.classList.add("light");
+      html.classList.remove("dark");
+    }
+  })();
+</script>
