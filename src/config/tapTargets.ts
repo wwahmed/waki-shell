@@ -10,12 +10,16 @@
  *  48, push, and consuming apps should pick it up within their
  *  next shell.json poll. */
 export const tapTargets = {
-  /** Minimum touchable area dimension for any interactive element. */
-  minPx: 44,
-  /** Equivalent Tailwind class (h-11 / w-11 = 44px). Components
-   *  that already adopt the shell pattern use w-11 h-11 buttons
+  /** Minimum touchable area dimension for any interactive element.
+   *  Bumped 2026-04-29 from 44 to 48 to match Material's recommendation
+   *  for primary actions. The 44 baseline still applies for secondary
+   *  surfaces; consumers reading this token should treat it as the
+   *  primary minimum. */
+  minPx: 48,
+  /** Equivalent Tailwind class (h-12 / w-12 = 48px). Components
+   *  that already adopt the shell pattern use w-12 h-12 buttons
    *  with smaller icons inside. */
-  minTw: "h-11 w-11",
+  minTw: "h-12 w-12",
   /** Default visual icon size inside a tap target — 28 px (w-7 /
    *  h-7) reads as similar visual weight to the 32 px avatar. */
   iconPx: 28,

@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
-  "gitSha": "fd09645",
-  "builtAt": "2026-04-29T16:50:49.052Z",
+  "gitSha": "86e75ab",
+  "builtAt": "2026-04-29T17:18:56.450Z",
   "config": {
     "breakpoints": {
       "sm": 640,
@@ -93,8 +93,8 @@
       "respectsReducedMotion": true
     },
     "tapTargets": {
-      "minPx": 44,
-      "minTw": "h-11 w-11",
+      "minPx": 48,
+      "minTw": "h-12 w-12",
       "iconPx": 28,
       "iconTw": "w-7 h-7"
     },
