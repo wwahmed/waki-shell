@@ -6,3 +6,5 @@ node_modules/
 *.tsbuildinfo
 # dist/ is intentionally tracked: dist/shell.json is the published
 # contract that consuming apps fetch via raw.githubusercontent.com.
+
+.claude/

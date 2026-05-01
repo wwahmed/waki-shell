@@ -4,6 +4,43 @@ All notable changes to this repo. Versions follow semver: patch for
 bug fixes, minor for new components or new config keys, major for
 breaking shape changes to existing config keys.
 
+## v0.3.0 - 2026-04-30 - btn-ghost + btn-success in utilities foundation
+
+Adds two button variants that printer-dashboard's audit flagged as
+missing from the foundation. Apps had been hand-rolling these in
+component code with raw Tailwind, defeating the point of the
+foundation. waki-themes Phase 2 of the same fix-up wires per-theme
+overrides for both new variants alongside the existing four, so a
+themed app gets the right palette automatically without each app
+re-deriving it.
+
+`Changelog:`
+- category: feature
+- kind: minor
+- label: Add btn-ghost + btn-success to foundation
+
+### Foundation
+
+- `.btn-ghost` - transparent background, slate hover/active tint;
+  the right call for inline secondary actions (cancel, dismiss,
+  toolbar items) where a filled secondary chip would over-weight.
+  Has light + dark mode coverage and the standard disabled state.
+- `.btn-success` - emerald-600 fill, emerald-700 hover, white
+  text. The right call for confirm-and-commit actions (save, send,
+  publish) where the existing `.btn-primary` (sky) reads more like
+  navigation than completion.
+
+Both variants follow the same disabled-state pattern as the rest
+of the family (`disabled:bg-slate-200 ...` light and dark).
+
+### Themes
+
+Themes ship per-theme overrides for these two new variants in
+waki-themes v0.x.0+ (see that repo's changelog). Until a consuming
+app upgrades the themes catalog, both variants paint with the
+sky/emerald foundation defaults regardless of which theme is
+active.
+
 ## v0.2.2 - 2026-04-29 - shadcn-style primitives + global surfaces + API client
 
 Second batch of EXTRACTION-GAPS.md follow-ups. The v0.2.0 round

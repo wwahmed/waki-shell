@@ -1,7 +1,7 @@
 {
-  "version": "0.2.2",
-  "gitSha": "6655197",
-  "builtAt": "2026-04-29T23:45:43.539Z",
+  "version": "0.3.0",
+  "gitSha": "0b411b5",
+  "builtAt": "2026-05-01T03:39:03.727Z",
   "config": {
     "breakpoints": {
       "sm": 640,
