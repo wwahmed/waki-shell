@@ -1,7 +1,7 @@
 {
   "version": "0.3.0",
-  "gitSha": "523c1ba",
-  "builtAt": "2026-05-15T01:08:26.083Z",
+  "gitSha": "b11b7ad",
+  "builtAt": "2026-05-15T01:26:10.111Z",
   "schema": 1,
   "hostnames": [
     {
@@ -76,6 +76,15 @@
       "counterpartHostname": "localhost:8190",
       "cloudflarePagesProject": null,
       "origin": "http://localhost:8290",
+      "cookieDomain": null
+    },
+    {
+      "hostname": "localhost:3000",
+      "app": "memso",
+      "brand": null,
+      "counterpartHostname": null,
+      "cloudflarePagesProject": null,
+      "origin": "http://localhost:3000",
       "cookieDomain": null
     }
   ],

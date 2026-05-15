@@ -84,7 +84,9 @@ export const HOSTNAMES: readonly HostnameEntry[] = [
   },
 ] as const;
 
-/** Local-dev hostnames. Vite dev servers, daemon dev ports. */
+/** Local-dev hostnames. Vite dev servers, daemon dev ports.
+ *  Each entry pairs with the matching daemon port so OAuth flows
+ *  + cross-app navigation work in dev. */
 export const DEV_HOSTNAMES: readonly HostnameEntry[] = [
   {
     hostname: "localhost:5173",
@@ -120,6 +122,16 @@ export const DEV_HOSTNAMES: readonly HostnameEntry[] = [
     counterpartHostname: "localhost:8190",
     cloudflarePagesProject: null,
     origin: "http://localhost:8290",
+    cookieDomain: null,
+  },
+  {
+    // Legacy Memso dev port (waki-brain v1 + some standalone runs).
+    hostname: "localhost:3000",
+    app: "memso",
+    brand: null,
+    counterpartHostname: null,
+    cloudflarePagesProject: null,
+    origin: "http://localhost:3000",
     cookieDomain: null,
   },
 ] as const;
