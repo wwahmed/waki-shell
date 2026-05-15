@@ -125,6 +125,27 @@ export { versionPlugin } from "./vite/version-plugin";
 export type { VersionPluginOptions } from "./vite/version-plugin";
 
 // Config re-exports for in-process use.
+export {
+  HOSTNAMES,
+  DEV_HOSTNAMES,
+  INTERNAL_HOSTNAMES,
+  ALL_HOSTNAMES,
+  findHostnameEntry,
+  findProdHostnameEntry,
+  knownHostsSet,
+  hostnamesForApp,
+  hostnamesForPagesProject,
+  allPagesProjects,
+  sessionCookieNameForBrand,
+  getCounterpartUrl,
+  appIdentityMarker,
+} from "./config/hostnames";
+export type {
+  AppKind,
+  Brand,
+  HostnameEntry,
+  CounterpartResolution,
+} from "./config/hostnames";
 export { breakpoints } from "./config/breakpoints";
 export { header } from "./config/header";
 export { bottomTabNav } from "./config/bottomTabNav";

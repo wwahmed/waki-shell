@@ -1,0 +1,87 @@
+{
+  "version": "0.3.0",
+  "gitSha": "523c1ba",
+  "builtAt": "2026-05-15T01:08:26.083Z",
+  "schema": 1,
+  "hostnames": [
+    {
+      "hostname": "app.memso.ai",
+      "app": "memso",
+      "brand": "memso.ai",
+      "counterpartHostname": "mail.memso.ai",
+      "cloudflarePagesProject": "memso-app",
+      "origin": "https://app.memso.ai",
+      "cookieDomain": ".memso.ai"
+    },
+    {
+      "hostname": "mail.memso.ai",
+      "app": "mail",
+      "brand": "memso.ai",
+      "counterpartHostname": "app.memso.ai",
+      "cloudflarePagesProject": "wakioutlookviewer",
+      "origin": "https://mail.memso.ai",
+      "cookieDomain": ".memso.ai"
+    },
+    {
+      "hostname": "app.3dbypixel.com",
+      "app": "memso",
+      "brand": "3dbypixel.com",
+      "counterpartHostname": "mail.3dbypixel.com",
+      "cloudflarePagesProject": "memso-app",
+      "origin": "https://app.3dbypixel.com",
+      "cookieDomain": ".3dbypixel.com"
+    },
+    {
+      "hostname": "mail.3dbypixel.com",
+      "app": "mail",
+      "brand": "3dbypixel.com",
+      "counterpartHostname": "app.3dbypixel.com",
+      "cloudflarePagesProject": "wakioutlookviewer",
+      "origin": "https://mail.3dbypixel.com",
+      "cookieDomain": ".3dbypixel.com"
+    }
+  ],
+  "devHostnames": [
+    {
+      "hostname": "localhost:5173",
+      "app": "memso",
+      "brand": null,
+      "counterpartHostname": "localhost:5174",
+      "cloudflarePagesProject": null,
+      "origin": "http://localhost:5173",
+      "cookieDomain": null
+    },
+    {
+      "hostname": "localhost:5174",
+      "app": "mail",
+      "brand": null,
+      "counterpartHostname": "localhost:5173",
+      "cloudflarePagesProject": null,
+      "origin": "http://localhost:5174",
+      "cookieDomain": null
+    },
+    {
+      "hostname": "localhost:8190",
+      "app": "memso",
+      "brand": null,
+      "counterpartHostname": "localhost:8290",
+      "cloudflarePagesProject": null,
+      "origin": "http://localhost:8190",
+      "cookieDomain": null
+    },
+    {
+      "hostname": "localhost:8290",
+      "app": "mail",
+      "brand": null,
+      "counterpartHostname": "localhost:8190",
+      "cloudflarePagesProject": null,
+      "origin": "http://localhost:8290",
+      "cookieDomain": null
+    }
+  ],
+  "internalHostnames": [
+    "brain2.3dbypixel.com",
+    "waqas.memso.ai",
+    "wov.3dbypixel.com"
+  ]
+}

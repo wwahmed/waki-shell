@@ -48,6 +48,11 @@ import { updateBanner } from "../src/config/updateBanner.ts";
 import { animations } from "../src/config/animations.ts";
 import { tapTargets } from "../src/config/tapTargets.ts";
 import { states } from "../src/config/states.ts";
+import {
+  HOSTNAMES,
+  DEV_HOSTNAMES,
+  INTERNAL_HOSTNAMES,
+} from "../src/config/hostnames.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
@@ -180,3 +185,20 @@ writeFileSync(outPath, JSON.stringify(payload, null, 2) + "\n", "utf-8");
 
 console.log(`[waki-shell] wrote ${outPath}`);
 console.log(`[waki-shell] version=${payload.version} gitSha=${payload.gitSha} components=${payload.components.length} hooks=${payload.hooks.length}`);
+
+// Sibling artifact: dist/hostnames.json. Standalone so consumers
+// (bash deploy scripts, reconcile-domains.sh, jq pipelines) can curl
+// the registry directly instead of grepping it out of shell.json.
+const hostnamesPayload = {
+  version: payload.version,
+  gitSha: payload.gitSha,
+  builtAt: payload.builtAt,
+  schema: 1,
+  hostnames: HOSTNAMES,
+  devHostnames: DEV_HOSTNAMES,
+  internalHostnames: INTERNAL_HOSTNAMES,
+};
+const hostnamesPath = resolve(distDir, "hostnames.json");
+writeFileSync(hostnamesPath, JSON.stringify(hostnamesPayload, null, 2) + "\n", "utf-8");
+console.log(`[waki-shell] wrote ${hostnamesPath}`);
+console.log(`[waki-shell] hostnames=${hostnamesPayload.hostnames.length} devHostnames=${hostnamesPayload.devHostnames.length}`);
