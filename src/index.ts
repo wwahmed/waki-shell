@@ -29,6 +29,23 @@ export type {
   ThemePickerIcons,
   ThemeMode,
 } from "./components/ThemePickerOverlay";
+export { LookSwitcher } from "./components/LookSwitcher";
+export type {
+  LookSwitcherProps,
+  LookSwitcherTheme,
+  LookSwitcherIcons,
+  LookSwitcherMode,
+} from "./components/LookSwitcher";
+
+// Next-generation shell family. These are additive and theme-contract
+// first: they use waki-themes material classes instead of baking in a
+// single app's chrome.
+export { WakiShellFrame } from "./components/next/WakiShellFrame";
+export type { WakiShellFrameProps } from "./components/next/WakiShellFrame";
+export { WakiSurface } from "./components/next/WakiSurface";
+export type { WakiSurfaceProps, WakiSurfaceTone } from "./components/next/WakiSurface";
+export { WakiToolbar } from "./components/next/WakiToolbar";
+export type { WakiToolbarProps } from "./components/next/WakiToolbar";
 
 // v0.2.2 component additions: shadcn-style primitives + global
 // surfaces (toast, error dialog, page transition, breadcrumb,

@@ -4,6 +4,29 @@ All notable changes to this repo. Versions follow semver: patch for
 bug fixes, minor for new components or new config keys, major for
 breaking shape changes to existing config keys.
 
+## v0.4.0 - 2026-05-17 - Waki Material Shell family
+
+Adds an additive next-generation shell family for the new
+waki-themes material catalog. Existing components remain exported.
+
+### Components
+
+- **WakiShellFrame** - material-aware app frame using `shell-sidebar`,
+  `shell-main`, `glass`, and mobile chrome classes from waki-themes.
+- **WakiSurface** - small surface primitive for `glass`,
+  `glass-elevated`, `glass-bar`, `panel-nested`, `shell-main`,
+  `shell-sidebar`, and `mobile-card`.
+- **WakiToolbar** - reusable themed toolbar/header strip for app
+  chrome, settings pages, and nested tool surfaces.
+- **LookSwitcher** stays part of this new family as the standard
+  compact theme + light/dark control.
+
+### Bundle metadata
+
+`dist/shell.json` now includes `componentFamilies` so consumers can
+distinguish legacy shell components, primitives, and the new Waki
+Material Shell adoption path.
+
 ## v0.3.0 - 2026-04-30 - btn-ghost + btn-success in utilities foundation
 
 Adds two button variants that printer-dashboard's audit flagged as

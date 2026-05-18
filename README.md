@@ -1,6 +1,6 @@
 # waki-shell
 
-Shared shell scaffolding for Waqas's apps. Component scaffolds (Header, BottomTabNav, Splash, UpdateBanner, UserMenu, EmptyState, LoadingSkeleton, ErrorState, AppShell, Sidebar) plus a versioned JSON config bundle published at `dist/shell.json`. Sibling repo to [waki-themes](https://github.com/wwahmed/waki-themes).
+Shared shell scaffolding for Waqas's apps. Component scaffolds (Header, BottomTabNav, Splash, UpdateBanner, UserMenu, EmptyState, LoadingSkeleton, ErrorState, AppShell, Sidebar) plus a new Waki Material Shell family (`WakiShellFrame`, `WakiSurface`, `WakiToolbar`, `LookSwitcher`) and a versioned JSON config bundle published at `dist/shell.json`. Sibling repo to [waki-themes](https://github.com/wwahmed/waki-themes).
 
 This repo is **public** because it contains only design tokens and shared UI patterns: no business logic, no secrets, no app-specific data. Consuming apps stay private. Same model as `shadcn/ui` and other shared design infra — public scaffolds, private consumers.
 
@@ -65,6 +65,19 @@ Every component is built so the consuming app supplies its own:
 - side-effect handlers (refresh routine, sign-out URL, version watcher)
 
 Defaults match [printer-dashboard](https://github.com/wwahmed/printer-dashboard) v0.15.1 since the components are extracted from there. See each component's JSDoc header for the API.
+
+## Waki Material Shell
+
+The old extracted components remain available for existing apps. New apps should start with the additive Waki Material Shell family:
+
+| Component | Purpose |
+|---|---|
+| `WakiShellFrame` | App frame that uses `shell-sidebar`, `shell-main`, and themed glass surfaces from waki-themes |
+| `WakiSurface` | Material-aware surface primitive for base, raised, bar, nested, sidebar, main, and mobile panels |
+| `WakiToolbar` | Reusable themed toolbar/header strip |
+| `LookSwitcher` | Standard compact theme + light/dark switcher |
+
+These components do not hard-code one app's palette. They rely on the active waki-themes CSS contract, so corner radius, blur, shadows, hover behavior, density, and dark-mode color all follow the selected material family.
 
 ## Layer-1 config
 

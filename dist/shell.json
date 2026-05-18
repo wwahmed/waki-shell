@@ -1,7 +1,7 @@
 {
-  "version": "0.3.0",
-  "gitSha": "0be5578",
-  "builtAt": "2026-05-18T03:50:31.571Z",
+  "version": "0.4.0",
+  "gitSha": "f9b7420",
+  "builtAt": "2026-05-18T04:17:51.288Z",
   "config": {
     "breakpoints": {
       "sm": 640,
@@ -129,6 +129,10 @@
     "LoadingSkeleton",
     "ErrorState",
     "ThemePickerOverlay",
+    "LookSwitcher",
+    "WakiShellFrame",
+    "WakiSurface",
+    "WakiToolbar",
     "Modal",
     "Spinner",
     "Badge",
@@ -161,6 +165,52 @@
   "vitePlugins": [
     "versionPlugin"
   ],
+  "componentFamilies": {
+    "legacy": {
+      "name": "Legacy Shell",
+      "description": "Original extracted app shell components kept for existing consumers.",
+      "introducedIn": "0.1.0",
+      "components": [
+        "AppShell",
+        "Header",
+        "BottomTabNav",
+        "Sidebar",
+        "Splash",
+        "UpdateBanner",
+        "UserMenu",
+        "EmptyState",
+        "LoadingSkeleton",
+        "ErrorState",
+        "ThemePickerOverlay"
+      ]
+    },
+    "primitives": {
+      "name": "Shell Primitives",
+      "description": "Reusable modal, toast, badge, tooltip, breadcrumb, state, and transition pieces.",
+      "introducedIn": "0.2.2",
+      "components": [
+        "Modal",
+        "Spinner",
+        "Badge",
+        "Tooltip",
+        "Breadcrumb",
+        "PageTransition",
+        "Toaster",
+        "ErrorDialog"
+      ]
+    },
+    "material": {
+      "name": "Waki Material Shell",
+      "description": "New gradual-adoption shell family designed for waki-themes material families and hue variants.",
+      "introducedIn": "0.4.0",
+      "components": [
+        "WakiShellFrame",
+        "WakiSurface",
+        "WakiToolbar",
+        "LookSwitcher"
+      ]
+    }
+  },
   "exports": {
     "components": {
       "AppShell": {
@@ -195,6 +245,18 @@
       },
       "ThemePickerOverlay": {
         "addedIn": "0.2.0"
+      },
+      "LookSwitcher": {
+        "addedIn": "0.3.1"
+      },
+      "WakiShellFrame": {
+        "addedIn": "0.4.0"
+      },
+      "WakiSurface": {
+        "addedIn": "0.4.0"
+      },
+      "WakiToolbar": {
+        "addedIn": "0.4.0"
       },
       "Modal": {
         "addedIn": "0.2.2"

@@ -96,6 +96,10 @@ const COMPONENTS: Record<string, ExportMeta> = {
   LoadingSkeleton: { addedIn: "0.1.0" },
   ErrorState: { addedIn: "0.1.0" },
   ThemePickerOverlay: { addedIn: "0.2.0" },
+  LookSwitcher: { addedIn: "0.3.1" },
+  WakiShellFrame: { addedIn: "0.4.0" },
+  WakiSurface: { addedIn: "0.4.0" },
+  WakiToolbar: { addedIn: "0.4.0" },
   Modal: { addedIn: "0.2.2" },
   Spinner: { addedIn: "0.2.2" },
   Badge: { addedIn: "0.2.2" },
@@ -104,6 +108,53 @@ const COMPONENTS: Record<string, ExportMeta> = {
   PageTransition: { addedIn: "0.2.2" },
   Toaster: { addedIn: "0.2.2" },
   ErrorDialog: { addedIn: "0.2.2" },
+};
+
+const COMPONENT_FAMILIES = {
+  legacy: {
+    name: "Legacy Shell",
+    description: "Original extracted app shell components kept for existing consumers.",
+    introducedIn: "0.1.0",
+    components: [
+      "AppShell",
+      "Header",
+      "BottomTabNav",
+      "Sidebar",
+      "Splash",
+      "UpdateBanner",
+      "UserMenu",
+      "EmptyState",
+      "LoadingSkeleton",
+      "ErrorState",
+      "ThemePickerOverlay",
+    ],
+  },
+  primitives: {
+    name: "Shell Primitives",
+    description: "Reusable modal, toast, badge, tooltip, breadcrumb, state, and transition pieces.",
+    introducedIn: "0.2.2",
+    components: [
+      "Modal",
+      "Spinner",
+      "Badge",
+      "Tooltip",
+      "Breadcrumb",
+      "PageTransition",
+      "Toaster",
+      "ErrorDialog",
+    ],
+  },
+  material: {
+    name: "Waki Material Shell",
+    description: "New gradual-adoption shell family designed for waki-themes material families and hue variants.",
+    introducedIn: "0.4.0",
+    components: [
+      "WakiShellFrame",
+      "WakiSurface",
+      "WakiToolbar",
+      "LookSwitcher",
+    ],
+  },
 };
 
 const HOOKS: Record<string, ExportMeta> = {
@@ -160,6 +211,7 @@ const payload = {
   styles: Object.keys(STYLES),
   templates: Object.keys(TEMPLATES),
   vitePlugins: Object.keys(VITE_PLUGINS),
+  componentFamilies: COMPONENT_FAMILIES,
   // v0.2.2 schema addition: per-export metadata keyed by name.
   // Each entry tracks the version that introduced it so consumers
   // can drive "new in this release" docs / changelog views without
